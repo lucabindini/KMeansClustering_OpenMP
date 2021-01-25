@@ -1,10 +1,14 @@
 #include <iostream>
-#include "Point.h"
+#include "KMeans.h"
+#include <chrono>
 
 int main() {
-    Point p1({1, 2});
-    Point p2({1, 2});
-    p1 += p2;
-
+    auto start = std::chrono::system_clock::now();
+    KMeans kmeans(5, 10000, 20, 10);
+    kmeans.execute();
+    auto end = std::chrono::system_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    std::cout<<std::endl;
+    std::cout << "Tempo: " << elapsed.count();
     return 0;
 }
