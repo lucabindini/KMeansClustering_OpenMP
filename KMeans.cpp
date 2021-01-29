@@ -53,16 +53,18 @@ void KMeans::printCentroids() {
 
 void KMeans::assignCentroids() {
     hasChanged = false;
+#pragma omp parallel for default(none) shared(hasChanged)
     for (Point p: points) {
         if (p.findNearest(centroids))
             hasChanged = true;
     }
     if (hasChanged)
-        std::cout << "HAS CHANGED"<<std::endl;
+        std::cout << "HAS CHANGED" << std::endl;
 }
 
 void KMeans::moveCentroids() {
-    for (int i=0; i < k; i++) {
+#pragma omp parallel for default(none)
+    for (int i = 0; i < k; i++) {
         moveCentroid(i);
     }
 }
