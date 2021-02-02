@@ -6,8 +6,6 @@
 #define KMEANSCLUSTERING_OPENMP_KMEANS_H
 
 #include "Point.h"
-#include <cstdlib>
-#include <ctime>
 
 class KMeans {
 public:

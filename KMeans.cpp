@@ -2,6 +2,7 @@
 // Created by Benelli, Bindini on 25/01/2021.
 //
 
+#include <random>
 #include "KMeans.h"
 
 KMeans::KMeans(int k, int n, int dimension, int maxIter) {
@@ -17,12 +18,12 @@ KMeans::KMeans(int k, int n, int dimension, int maxIter) {
 }
 
 void KMeans::init() {
-    std::vector<float> coordinates;
-    std::srand(std::time(nullptr));
+    std::random_device rd;
+    std::mt19937 gen(rd());
     for (int i = 0; i < n; i++) {
-        coordinates = std::vector<float>();
+        std::vector<float> coordinates = std::vector<float>(dimension);
         for (int j = 0; j < dimension; j++) {
-            coordinates.push_back(std::rand() / (float) RAND_MAX);
+            coordinates[j] = std::generate_canonical<float, 10>(gen);
         }
         points.emplace_back(coordinates);
     }
@@ -58,8 +59,8 @@ void KMeans::assignCentroids() {
         if (p.findNearest(centroids))
             hasChanged = true;
     }
-    if (hasChanged)
-        std::cout << "HAS CHANGED" << std::endl;
+//    if (hasChanged)
+//        std::cout << "HAS CHANGED" << std::endl;
 }
 
 void KMeans::moveCentroids() {
