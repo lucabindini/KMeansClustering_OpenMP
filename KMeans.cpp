@@ -29,6 +29,7 @@ float KMeans::pointDistance(int p, int c) {
 }
 
 void KMeans::kMeansIteration() {
+#pragma omp parallel for default(none)
     for (int p = 0; p < n; p++) {
         if (p < k) {
             for (int d = 0; d < dimension; d++)
@@ -46,9 +47,11 @@ void KMeans::kMeansIteration() {
                 nearestId = c;
             }
         }
+#pragma omp atomic
         pointsPerCluster[nearestId]++;
         for (int d = 0; d < dimension; d++) {
             //printf("\t\t\td = %d\n", d);
+#pragma omp atomic
             newCentroids[d * k + nearestId] += points[d * n + p];
         }
         if (p < k) {
