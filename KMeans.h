@@ -5,36 +5,31 @@
 #ifndef KMEANSCLUSTERING_OPENMP_KMEANS_H
 #define KMEANSCLUSTERING_OPENMP_KMEANS_H
 
-#include "Point.h"
+#include <iostream>
+#include <cmath>
 
 class KMeans {
 public:
-    KMeans(int k, int n, int dimension, int maxIter);
+    KMeans(float *points, int n, int k, int dimension, int maxIter);
 
     void execute();
 
-    void printAllPoints();
-
-    void printCentroids();
+    ~KMeans();
 
 
 private:
-    int k;
     int n;
+    int k;
     int dimension;
     int maxIter;
-    bool hasChanged;
-    std::vector<Point> points;
-    std::vector<Point> centroids;
-    std::vector<Point> oldCentroids;
+    float *points;
+    float *centroids;
+    float *newCentroids;
+    unsigned int *pointsPerCluster;
 
-    void init();
+    float pointDistance(int p, int c);
 
-    void assignCentroids();
-
-    void moveCentroids();
-
-    void moveCentroid(int centroidID);
+    void kMeansIteration();
 
 };
 
